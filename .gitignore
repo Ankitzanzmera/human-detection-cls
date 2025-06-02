@@ -9,6 +9,7 @@ __pycache__/
 ## Custom
 data/human_detection_dataset
 artifacts
+preds
 
 # Distribution / packaging
 .Python

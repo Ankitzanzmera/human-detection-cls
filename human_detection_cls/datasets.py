@@ -1,7 +1,7 @@
 import cv2
 import torch
 import os.path as osp
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 
 
 class BinarDataset(Dataset):

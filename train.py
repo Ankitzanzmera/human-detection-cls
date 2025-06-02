@@ -139,20 +139,4 @@ if __name__ == "__main__":
         binary_label_train_accuracy.reset()
         binary_label_valid_accuracy.reset()
         print("--" * 75)
-            
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-
-    
-    
-    
-    
-    
+        
