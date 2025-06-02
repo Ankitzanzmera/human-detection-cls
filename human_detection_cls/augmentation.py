@@ -17,15 +17,13 @@ def get_transforms(size):
 
                 # Blur and noise
                 A.GaussianBlur(blur_limit=(3, 5), p=0.3),
-                A.GaussNoise(var_limit=(10.0, 50.0), p=0.3),
+                A.RandomGamma(gamma_limit=(90, 110), p=0.3),
 
                 # Distortions
-                A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.2),
+                A.ElasticTransform(alpha=1, sigma=50, p=0.2),
                 A.GridDistortion(p=0.2),
-                A.OpticalDistortion(distort_limit=0.05, shift_limit=0.05, p=0.2),
+                A.OpticalDistortion(distort_limit=0.05, p=0.2),
 
-                # Cutout / Random erase
-                A.CoarseDropout(max_holes=1, max_height=32, max_width=32, fill_value=0, p=0.5),
 
                 # Final conversion
                 A.Resize(height = size, width = size, p=1.0),

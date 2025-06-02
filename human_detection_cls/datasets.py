@@ -28,7 +28,7 @@ class BinarDataset(Dataset):
             else:
                 image = rgb_image / 255.0
         
-        label = torch.tensor(self.label_map[labels])
+        label = torch.tensor(self.label_map[labels], dtype=torch.float)
         sample = {"image_path":image_path, "image":image, "label":label}
         
         return sample
