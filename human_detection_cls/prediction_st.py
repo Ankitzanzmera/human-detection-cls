@@ -11,27 +11,23 @@ from .models import DensnetModel
 from .augmentation import get_transforms
 
 class PredictionPipeline:
-    def __init__(self, args):
-        
-        self.args = args
+    def __init__(self):
+
         self.model = DensnetModel(num_classes=1, pretrained=False)
         self.model.load_state_dict(torch.load("/home/ankit/human_detection_classifier/artifacts/exp-2025-06-01/best_model.pth"))
         _, self.transforms = get_transforms(IMAGE_SIZE)
         self.reverse_label_map = {v:k for k,v in LABEL_MAP.items()}
         
-    def pred(self):
-        rgb_image = cv2.imread(self.args.img_path)
-
+    def pred(self, rgb_image):
+        rgb_image = np.array(rgb_image)
         if self.transforms:
             image = self.transforms(image = rgb_image.copy())['image'].unsqueeze(0)
         
-        y_pred = self.model(image)
-        y_pred = 1 if y_pred.item() >= 0.5 else 0  
+        y_pred_prob = self.model(image)
+        y_pred = 1 if y_pred_prob.item() >= 0.5 else 0  
         
-        if self.args.save:
-            self.generate_grad_cam(rgb_image, image, y_pred)    
-
-        return self.reverse_label_map[y_pred]
+        grad_cam_image = self.generate_grad_cam(rgb_image, image, y_pred)    
+        return y_pred_prob.item(), self.reverse_label_map[y_pred], grad_cam_image
         
     def generate_grad_cam(self, rgb_image, input_image, y_pred):
         
@@ -44,7 +40,6 @@ class PredictionPipeline:
         with GradCAMPlusPlus(model = self.model, target_layers=target_layer) as cam:
             grascale_cam = cam(input_tensor = input_image, targets=targets)
             grascale_cam = grascale_cam[0, :]
-            grad_cam =  show_cam_on_image(rgb_image, grascale_cam, use_rgb=False)
-            
-        cv2.imwrite(osp.join(self.args.save, osp.basename(self.args.img_path)), grad_cam)
-
+            grad_cam_img =  show_cam_on_image(rgb_image, grascale_cam, use_rgb=True)
+        
+        return grad_cam_img

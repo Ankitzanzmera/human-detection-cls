@@ -9,8 +9,6 @@ from human_detection_cls.prediction import PredictionPipeline
 def pred_image(args):
     pred_pipeline = PredictionPipeline(args)
     output = pred_pipeline.pred()
-    
-    
     print(f"Model Predicted {output}...")
 
 def main():
