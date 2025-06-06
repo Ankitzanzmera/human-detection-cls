@@ -1,4 +1,6 @@
+import os
 import torch
+from .config import MODEL_SAVE_PATH
 
 class EarlyStopping:
     def __init__(self, patience=3, delta=0, verbose=False, save_path="checkpoint.pth"):
@@ -10,7 +12,9 @@ class EarlyStopping:
         self.early_stop = False
         self.save_path = save_path
         self.best_model = None
-
+        os.makedirs(MODEL_SAVE_PATH, exist_ok=True)
+        
+        
     def __call__(self, val_loss, model, logger):
         score = -val_loss  # Minimize loss (maximize negative loss)
 
@@ -34,4 +38,6 @@ class EarlyStopping:
             logger.info(f"Validation loss improved. Saving model to {self.save_path} ...")
             
         torch.save(model.state_dict(), self.save_path)
+        torch.save(model.state_dict(), os.path.join(MODEL_SAVE_PATH, "best_model.pth"))
+        
 

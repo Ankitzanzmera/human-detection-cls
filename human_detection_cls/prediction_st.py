@@ -14,7 +14,7 @@ class PredictionPipeline:
     def __init__(self):
 
         self.model = DensnetModel(num_classes=1, pretrained=False)
-        self.model.load_state_dict(torch.load("/home/ankit/human_detection_classifier/artifacts/exp-2025-06-01/best_model.pth"))
+        self.model.load_state_dict(torch.load("saved_model/best_model.pth"))
         _, self.transforms = get_transforms(IMAGE_SIZE)
         self.reverse_label_map = {v:k for k,v in LABEL_MAP.items()}
         

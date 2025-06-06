@@ -16,10 +16,12 @@ IMAGE_SIZE = 256
 NUM_EPOCHS = 30
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 CRITERION = torch.nn.BCEWithLogitsLoss()
+MODEL_SAVE_PATH = osp.join(os.getcwd(), "saved_model")  ## Model Will Sotred in both artifact directory and this directory
 
 def get_model_parameters(model):
     LR = 0.0001
     OPTIMIZER = torch.optim.AdamW(model.parameters(), lr = LR)
     return OPTIMIZER
     
-    
+
+print(MODEL_SAVE_PATH)
