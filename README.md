@@ -27,7 +27,7 @@
 Follow the steps below to download and prepare the dataset:
 
 1. **Download the dataset** from Kaggle:  
-   [🔗 Human Detection Dataset](https://www.kaggle.com/datasets/constantinwerner/human-detection-dataset/data)
+   [🔗 Human Detection Dataset](https://drive.google.com/file/d/1nmHU5cwjO7Ncb4JZMKbc50d0I6yPg7eN/view?usp=sharing)
 
 2. **Extract the zip file** into the `data/` directory of this project.
 
